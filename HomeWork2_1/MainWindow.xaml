@@ -1,0 +1,37 @@
+﻿<Window x:Class="HomeWork2_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomeWork2_1.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="550" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:ThreedsVM></local:ThreedsVM>
+    </Window.DataContext>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/1.jpg"></ImageBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Foreground="White" FontSize="15" FontWeight="Bold">Потік 1: Сортування бульбашкою</TextBlock>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Foreground="White" FontSize="15" FontWeight="Bold">Потік 2: Сортування вставкою</TextBlock>
+        <ListView x:Name="t1_TB" Background="#FF0B4B57" Foreground="White"  Grid.Row="1" ItemsSource="{Binding BubbleArray}" Width="100"></ListView>
+        <ListView x:Name ="t2_TB" Background="#FF0B4B57" Foreground="White" Grid.Row="1"  Grid.Column="1" ItemsSource="{Binding InsertionArray}" Width="100"></ListView>
+        <TextBlock HorizontalAlignment="Center" Foreground="White" FontSize="14" Grid.Row="2">Час виконання потоку у (мілісек)</TextBlock>
+        <TextBlock HorizontalAlignment="Center" Foreground="White" FontSize="14" Grid.Row="2" Grid.Column="1">Час виконання потоку у (мілісек)</TextBlock>
+        <Label FontSize="16" Grid.Row="2" Foreground="White" Content="{Binding T1_Time}" HorizontalContentAlignment="Center" Margin="0,20,0,0"></Label>
+        <Label FontSize="16" Grid.Row="2" Foreground="White" Grid.Column="1" Content="{Binding T2_Time}" HorizontalContentAlignment="Center" Margin="0,20,0,0"></Label>
+        <Button Margin="20" Background="White" Grid.Row="3" FontWeight="Bold" Command="{Binding Start}" FontSize="14">Старт</Button>
+        <Button Margin="20" Background="White" FontWeight="Bold" Grid.Row="3" Grid.Column="1" Command="{Binding Stop}" FontSize="14">Аборт потокам</Button>
+    </Grid>
+</Window>
