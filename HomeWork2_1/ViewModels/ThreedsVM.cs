@@ -22,8 +22,8 @@ namespace HomeWork2_1.ViewModels
         private long t1_Time; 
         private long t2_Time;
 
-        private Thread t1;
-        private Thread t2;
+        private Thread threed1;
+        private Thread threed2;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -88,7 +88,7 @@ namespace HomeWork2_1.ViewModels
         }
 
 
-        private void BubleSort()
+        private void BubbleSort()
         {
             int l = bubbleArray.Length;
             bool swapped;
@@ -137,25 +137,8 @@ namespace HomeWork2_1.ViewModels
             bubbleArray = ReadArray();
             insertionArray = ReadArray();
 
-            Stopwatch stopwatchT1 = new Stopwatch();
-            stopwatchT1.Start();
-
-            t1 = new Thread(BubleSort);
-            t1.Start();
-            t1.Join();
-
-            stopwatchT1.Stop();
-            T1_Time = stopwatchT1.ElapsedMilliseconds;
-
-            Stopwatch stopwatchT2 = new Stopwatch();
-            stopwatchT2.Start();
-
-            t2 = new Thread(InsertionSort);
-            t2.Start();
-            t2.Join();
-
-            stopwatchT2.Stop();
-            T2_Time = stopwatchT2.ElapsedMilliseconds;
+            T1_Time = SortTime(BubbleSort);
+            T2_Time = SortTime(InsertionSort);
 
             OnPropertyChanged(nameof(BubbleArray));
             OnPropertyChanged(nameof(InsertionArray));
@@ -163,11 +146,24 @@ namespace HomeWork2_1.ViewModels
             OnPropertyChanged(nameof(T2_Time));
         }
 
+        private long SortTime(ThreadStart sortingMethod)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Thread thread = new Thread(sortingMethod);
+            thread.Start();
+            thread.Join();
+            stopwatch.Stop();
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+
         public ICommand Stop
         {
             get
             {
-                return new RelayCommand(() => { t1.Abort(); t2.Abort(); });
+                return new RelayCommand(() => { threed1.Abort(); threed2.Abort(); });
             }
         }
     }
